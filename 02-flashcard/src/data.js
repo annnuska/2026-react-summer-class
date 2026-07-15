@@ -90,3 +90,4 @@ const flashcards = [
     answer: "map() creates a new array by transforming each element.",
   },
 ];
+export default flashcards;

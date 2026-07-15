@@ -1,4 +1,4 @@
-function Header() {
+function Header({ cartCount }) {
   return (
     <header className="header">
       <div className="header-container">
@@ -13,6 +13,7 @@ function Header() {
               placeholder="Search products..."
               className="search-input"
             />
+
             <button className="search-button">
               Search
             </button>
@@ -20,12 +21,20 @@ function Header() {
         </div>
 
         <div className="nav-actions">
-          <a href="#" className="nav-link">Home</a>
-          <a href="#" className="nav-link">Products</a>
-          <a href="#" className="nav-link">Contact</a>
+          <a href="#" className="nav-link">
+            Home
+          </a>
+
+          <a href="#" className="nav-link">
+            Products
+          </a>
+
+          <a href="#" className="nav-link">
+            Contact
+          </a>
 
           <button className="cart-btn">
-            Cart
+            🛒 Cart: {cartCount}
           </button>
         </div>
       </div>

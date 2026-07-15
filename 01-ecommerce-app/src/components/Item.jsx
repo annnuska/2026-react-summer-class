@@ -1,9 +1,10 @@
-function Item({ product }) {
+function Item({ product, addToCart }) {
   return (
     <div
       className="item-card"
       style={{
-        backgroundColor: product.stock === 0 ? "#d1d5db" : "white",
+        backgroundColor:
+          product.stock === 0 ? "#d1d5db" : "white",
       }}
     >
       <div className="item-meta">
@@ -31,7 +32,9 @@ function Item({ product }) {
       </div>
 
       <div className="item-info">
-        <p className="item-brand">{product.brand}</p>
+        <p className="item-brand">
+          {product.brand}
+        </p>
 
         <h3>{product.title}</h3>
 
@@ -56,13 +59,14 @@ function Item({ product }) {
         </span>
 
         <button
-          className="add-to-bag-button"
-          disabled={product.stock === 0}
-        >
-          {product.stock === 0
-            ? "Sold Out"
-            : "Add to Bag"}
-        </button>
+           className="add-to-bag-button"
+           disabled={product.stock === 0}
+           onClick={() => addToCart(product)}
+>
+           {product.stock === 0
+           ? "Sold Out"
+           : "Add to Bag"}
+</button>
       </div>
     </div>
   );

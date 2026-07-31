@@ -1,31 +1,16 @@
 import Item from "./Item";
 
-function ItemList({ products, addToCart }) {
-  if (products.length === 0) {
-    return <h2>No products available</h2>;
-  }
-
+function ItemList({ items, handleAddToCart }) {
   return (
-    <>
-      <h2
-        style={{
-          textAlign: "center",
-          marginTop: "20px",
-        }}
-      >
-        {products.length} Products Available
-      </h2>
-
-      <div className="items-grid">
-        {products.map((product) => (
-          <Item
-            key={product.id}
-            product={product}
-            addToCart={addToCart}
-          />
-        ))}
-      </div>
-    </>
+    <section className="items-grid">
+      {items.length > 0 ? (
+        items.map((item) => (
+          <Item key={item.id} item={item} handleAddToCart={handleAddToCart} />
+        ))
+      ) : (
+        <p>No products are available</p>
+      )}
+    </section>
   );
 }
 

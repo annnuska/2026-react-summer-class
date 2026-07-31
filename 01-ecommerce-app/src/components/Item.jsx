@@ -1,74 +1,32 @@
-function Item({ product, addToCart }) {
+function Item({ item, handleAddToCart }) {
   return (
-    <div
-      className="item-card"
-      style={{
-        backgroundColor:
-          product.stock === 0 ? "#d1d5db" : "white",
-      }}
-    >
+    <article className="item-card">
       <div className="item-meta">
-        <span className="item-category">
-          {product.category.name}
-        </span>
-
-        <span className="item-rating">
-          {"★".repeat(Math.round(product.rating))}
-        </span>
+        <span className="item-category">{item.category.name}</span>
+        <span className="item-rating">★ {item.rating}</span>
       </div>
-
       <div className="item-image-container">
-        <img
-          src={product.images[0]}
-          alt={product.title}
-          className="item-image"
-        />
-
-        {product.stock <= 12 && product.stock > 0 && (
-          <div className="item-stock-badge">
-            Only {product.stock} left
-          </div>
+        <img src={item.images[0]} alt={item.title} className="item-image" />
+        {item.stock <= 12 && (
+          <span className="item-stock-badge">Only {item.stock} left</span>
         )}
       </div>
-
       <div className="item-info">
-        <p className="item-brand">
-          {product.brand}
-        </p>
-
-        <h3>{product.title}</h3>
-
-        <p className="item-description">
-          {product.description}
-        </p>
-
-        <p>Rating: {product.rating}</p>
-
-        {product.rating >= 4.8 && (
-          <p>Best Seller</p>
-        )}
-
-        {product.price > 250 && (
-          <p>Premium</p>
-        )}
+        <span className="item-brand">{item.brand}</span>
+        <h3>{item.title}</h3>
+        <p className="item-description">{item.description}</p>
       </div>
-
       <div className="item-footer">
-        <span className="price">
-          ${product.price}
-        </span>
-
+        <span className="price">Rs. {item.price.toFixed(2)}</span>
         <button
-           className="add-to-bag-button"
-           disabled={product.stock === 0}
-           onClick={() => addToCart(product)}
->
-           {product.stock === 0
-           ? "Sold Out"
-           : "Add to Bag"}
-</button>
+          type="button"
+          className="add-to-bag-button"
+          onClick={handleAddToCart}
+        >
+          Add to bag
+        </button>
       </div>
-    </div>
+    </article>
   );
 }
 

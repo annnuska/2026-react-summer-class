@@ -50,7 +50,7 @@ const products = [
     id: 3,
     title: "Apple AirPods Pro (2nd Gen)",
     slug: "apple-airpods-pro-2nd-gen",
-    price: 249,
+    price: 250,
     description: "Premium wireless earbuds with noise cancellation.",
     brand: "Apple",
     rating: 4.9,

@@ -1,61 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ItemList from "../components/ItemList";
-import products from "../data/products";
 
-function Home() {
-  const [items, setItems] = useState(products);
-  const [cart, setCart] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+function Home({ filteredItems, handleAddToCart, cart }) {
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState(filteredItems);
 
-  function handleAddToCart(product) {
-    const existItem = cart.find((item) => item.id === product.id);
-
-    if (existItem) {
-      const updatedCart = cart.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      );
-
-      setCart(updatedCart);
-    } else {
-      setCart([
-        ...cart,
-        {
-          ...product,
-          quantity: 1,
-        },
-      ]);
+  useEffect(() => {
+    async function getCategories() {
+      const res = await fetch("https://api.escuelajs.co/api/v1/categories" );
+      const data = await res.json();
+      setCategories(data);
     }
-  }
 
-  function handleSearchChange(e) {
-    setSearchQuery(e.target.value);
+    getCategories();
+  }, []);
 
-    if (e.target.value === "") {
-      setItems(products);
-    }
-  }
+  useEffect(() => {
+    setProducts(filteredItems);
+  }, [filteredItems]);
 
-  function handleSearchSubmit(e) {
-    e.preventDefault();
-
-    const filteredItems = searchQuery
-      ? products.filter(
-          (item) =>
-            item.title
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase()) ||
-            item.brand
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase()) ||
-            item.category.name
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase())
-        )
-      : products;
-
-    setItems(filteredItems);
+  async function handleCategory(id) {
+    const res = await fetch(
+      `https://api.escuelajs.co/api/v1/categories/${id}/products`
+);
+    const data = await res.json();
+    setProducts(data);
   }
 
   return (
@@ -70,34 +39,27 @@ function Home() {
         </p>
       </section>
 
-      {/* Search Form */}
+      <div className="home-container">
+        <aside>
+          <h3>Categories</h3>
 
-      <div className="search-container">
-        <form
-          className="search-form"
-          onSubmit={handleSearchSubmit}
-        >
-          <input
-            type="text"
-            placeholder="Search products..."
-            className="search-input"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
+          {categories.map((category) => (
+            <label key={category.id}>
+              <input
+                type="checkbox"
+                onChange={() => handleCategory(category.id)}
+              />
+              {category.name}
+            </label>
+          ))}
+        </aside>
 
-          <button
-            type="submit"
-            className="search-button"
-          >
-            Search
-          </button>
-        </form>
+        <ItemList
+          items={products}
+          handleAddToCart={handleAddToCart}
+          cart={cart}
+        />
       </div>
-
-      <ItemList
-        products={items}
-        addToCart={handleAddToCart}
-      />
     </>
   );
 }

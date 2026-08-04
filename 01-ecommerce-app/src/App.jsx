@@ -5,6 +5,12 @@ import SearchForm from './components/SearchForm.jsx';
 import Home from './pages/Home.jsx';
 import Header from './components/Header.jsx';
 import NavBar from './components/NavBar.jsx';
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Products from "./pages/Products";
+import About from "./pages/About";
+
+
 
 function App() {
   const [items, setItems] = useState([]);
@@ -53,15 +59,12 @@ function App() {
 
   function handleSearchChange(e) {
     setSearchQuery(e.target.value);
-    if (searchQuery === "") {
-      setItems(initialItems);
-    }
   }
 
   //prop drilling: passing data from parent to child component through props
   //prop drilling solved using component composition: passing data from parent to child component through children prop
 
-  return (
+  /*return (
     <div className="page">
       <Header>
         <SearchForm
@@ -78,15 +81,46 @@ function App() {
     </div>
     
   );
+}*/
+  
+
+  return (
+  <Routes>
+    <Route
+      path="/"
+      element={
+        <Layout
+          searchQuery={searchQuery}
+          handleSearchChange={handleSearchChange}
+          cartLength={cartLength}
+        />
+      }
+    >
+      <Route
+        index
+        element={
+          <Home
+            filteredItems={filteredItems}
+            handleAddToCart={handleAddToCart}
+            cart={cart}
+          />
+        }
+      />
+
+      <Route
+        path="products"
+        element={
+          <Products
+            handleAddToCart={handleAddToCart}
+            cart={cart}
+          />
+        }
+      />
+
+      <Route path="about" element={<About />} />
+    </Route>
+  </Routes>
+);
 }
-
-
-
-
-
-
-
-
-
 
 export default App;

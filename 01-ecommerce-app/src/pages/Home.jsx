@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react";
 import ItemList from "../components/ItemList";
+import { useFetch } from "@/hooks/useFetch";
+
 
 function Home({ filteredItems, handleAddToCart, cart }) {
-  const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState(filteredItems);
 
-  useEffect(() => {
-    async function getCategories() {
-      const res = await fetch("https://api.escuelajs.co/api/v1/categories" );
-      const data = await res.json();
-      setCategories(data);
-    }
-
-    getCategories();
-  }, []);
-
+  const {products: categories}= useFetch("https://api.escuelajs.co/api/v1/categories")
+  
   useEffect(() => {
     setProducts(filteredItems);
   }, [filteredItems]);

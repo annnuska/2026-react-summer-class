@@ -9,6 +9,9 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Products from "./pages/Products";
 import About from "./pages/About";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import ProductDescription from "./pages/ProductDescription";
 
 
 
@@ -96,16 +99,16 @@ function App() {
         />
       }
     >
-      <Route
-        index
-        element={
-          <Home
-            filteredItems={filteredItems}
-            handleAddToCart={handleAddToCart}
-            cart={cart}
-          />
-        }
-      />
+     <Route
+      index
+      element={
+        <Home
+          filteredItems={filteredItems}
+          handleAddToCart={handleAddToCart}
+          cart={cart}
+        />
+      }
+    />
 
       <Route
         path="products"
@@ -118,9 +121,15 @@ function App() {
       />
 
       <Route path="about" element={<About />} />
+      <Route path="cart" element={<Cart />} />
+      <Route path="checkout" element={<Checkout />} />
+      <Route
+        path="product-description"
+        element={<ProductDescription />}
+      />
     </Route>
   </Routes>
 );
-}
+  }
 
 export default App;

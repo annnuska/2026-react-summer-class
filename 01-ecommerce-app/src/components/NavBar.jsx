@@ -8,6 +8,9 @@ export default function NavBar({ cartLength }) {
       <Link to="/products">Products</Link>
 
       <Link to="/about">About</Link>
+      <Link to="/cart">Cart</Link>
+
+      <Link to="/checkout">Checkout</Link>
 
       <button className="cart-btn" aria-label="Cart">
         <svg

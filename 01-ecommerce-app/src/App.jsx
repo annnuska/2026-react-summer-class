@@ -21,10 +21,39 @@ function App() {
 
   const cartLength = cart.length; //derive state
   const [searchQuery, setSearchQuery] = useState("");
-  function handleAddToCart(item) {
-    const updatedCart = [...cart, item];
-    setCart(updatedCart);
+  function handleAddToCart(item, quantity=1) {
+    setCart((cart) => {
+      const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+
+      if (existingItem) {
+        return cart.map((cartItem) =>
+          cartItem.id === item.id
+            ? {
+                ...cartItem,
+                quantity: cartItem.quantity + quantity,
+              }
+            : cartItem,
+        );
+      }
+
+      return [
+        ...cart,
+        {
+          id: item.id,
+          title: item.title,
+          image: item?.images?.[0],
+          price: item.price,
+          quantity: quantity,
+        },
+      ];
+    });
+
+    alert("Added to cart");
+
   }
+
+  console.log(cart); 
+  
 
   const filteredItems = items.filter((item) =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -123,13 +152,11 @@ function App() {
       <Route path="about" element={<About />} />
       <Route path="cart" element={<Cart />} />
       <Route path="checkout" element={<Checkout />} />
-      <Route
-        path="product-description"
-        element={<ProductDescription />}
-      />
-    </Route>
+      <Route path="product-description/:slug"element={ <ProductDescription
+      handleAddToCart={handleAddToCart}/>
+      }/></Route>
   </Routes>
 );
-  }
+}
 
 export default App;

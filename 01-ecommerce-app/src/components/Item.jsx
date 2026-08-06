@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+
+
 function Item({ item, handleAddToCart }) {
   return (
     <article className="item-card">
@@ -35,6 +38,10 @@ function Item({ item, handleAddToCart }) {
         >
           Add to bag
         </button>
+            <Link to={`/product-description/${item.slug}`}><button>
+          View
+      
+        </button></Link>
       </div>
     </article>
   );

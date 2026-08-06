@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function NavBar({ cartLength }) {
   return (
     <nav className="nav-actions">
-      <Link to="/">Home</Link>
+      <NavLink to="/">Home</NavLink>
 
-      <Link to="/products">Products</Link>
+      <NavLink to="/products">Products</NavLink>
 
-      <Link to="/about">About</Link>
-      <Link to="/cart">Cart</Link>
+      <NavLink to="/about">About</NavLink>
+      <NavLink to="/cart">Cart</NavLink>
 
-      <Link to="/checkout">Checkout</Link>
+      <NavLink to="/checkout">Checkout</NavLink>
 
       <button className="cart-btn" aria-label="Cart">
         <svg

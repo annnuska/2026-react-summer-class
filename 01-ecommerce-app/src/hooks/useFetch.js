@@ -5,11 +5,13 @@ export function useFetch(url) {
 
   useEffect(() => {
     async function getProducts() {
-      const res = await fetch(url);
-
-      const data = await res.json();
-
-      setProducts(data);
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        setProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     getProducts();

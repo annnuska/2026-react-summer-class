@@ -1,7 +1,13 @@
+import CartContext from "@/context/CartContext";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 
-function Item({ item, handleAddToCart }) {
+function Item({ item }) {
+
+  const {addToCart : handleAddToCart } = useContext(CartContext);
+
+
   return (
     <article className="item-card">
       <div className="item-meta">

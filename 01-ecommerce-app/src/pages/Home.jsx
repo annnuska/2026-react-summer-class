@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ItemList from "../components/ItemList";
 import { useFetch } from "@/hooks/useFetch";
 
-
-function Home({ filteredItems, handleAddToCart, cart }) {
+function Home({ filteredItems }) {
   const [products, setProducts] = useState(filteredItems);
+  const { products: categories } = useFetch(
+    "https://api.escuelajs.co/api/v1/categories"
+  );
 
-  const {products: categories}= useFetch("https://api.escuelajs.co/api/v1/categories")
-  
   useEffect(() => {
     setProducts(filteredItems);
   }, [filteredItems]);
@@ -15,8 +15,10 @@ function Home({ filteredItems, handleAddToCart, cart }) {
   async function handleCategory(id) {
     const res = await fetch(
       `https://api.escuelajs.co/api/v1/categories/${id}/products`
-);
+    );
+
     const data = await res.json();
+
     setProducts(data);
   }
 
@@ -42,6 +44,7 @@ function Home({ filteredItems, handleAddToCart, cart }) {
                 type="checkbox"
                 onChange={() => handleCategory(category.id)}
               />
+
               {category.name}
             </label>
           ))}
@@ -49,8 +52,7 @@ function Home({ filteredItems, handleAddToCart, cart }) {
 
         <ItemList
           items={products}
-          handleAddToCart={handleAddToCart}
-          cart={cart}
+
         />
       </div>
     </>

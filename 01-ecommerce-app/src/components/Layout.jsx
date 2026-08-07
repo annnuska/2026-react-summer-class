@@ -6,11 +6,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Outlet } from "react-router-dom";
 
+
 export default function Layout({
   searchQuery,
-  handleSearchChange,
-  cartLength,
+  handleSearchChange
 }) {
+
   return (
     <>
       <div className="page">
@@ -20,7 +21,7 @@ export default function Layout({
             searchQuery={searchQuery}
             onSearchChange={handleSearchChange}
           />
-          <NavBar cartLength={cartLength} />
+          <NavBar  />
         </Header>
 
         <Outlet />

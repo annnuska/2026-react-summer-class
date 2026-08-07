@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import CartContext from "@/context/CartContext";
+export default function NavBar() {
+    const { cartLength } = useContext(CartContext);
 
-export default function NavBar({ cartLength }) {
   return (
     <nav className="nav-actions">
       <NavLink to="/">Home</NavLink>

@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useFetch } from "@/hooks/useFetch";
+import CartContext from "@/context/CartContext";
 
-function ProductDescription({ handleAddToCart }) {
+function ProductDescription() {
   const { slug } = useParams();
+
+  const { addToCart } = useContext(CartContext);
 
   const { products: product } = useFetch(
     `https://api.escuelajs.co/api/v1/products/slug/${slug}`
@@ -18,6 +21,7 @@ function ProductDescription({ handleAddToCart }) {
   return (
     <div className="max-w-6xl mx-auto p-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+
         <div>
           <img
             src={product.images?.[0]}
@@ -64,8 +68,7 @@ function ProductDescription({ handleAddToCart }) {
             <button
               className="border px-4 py-2"
               onClick={() =>
-                quantity > 1 &&
-                setQuantity(quantity - 1)
+                quantity > 1 && setQuantity(quantity - 1)
               }
             >
               -
@@ -85,24 +88,23 @@ function ProductDescription({ handleAddToCart }) {
 
           <button
             className="bg-black text-white px-8 py-3 rounded-lg mt-6"
-            onClick={() =>
-              handleAddToCart(product, quantity)
-            }
+            onClick={() => addToCart(product, quantity)}
           >
             Add to Cart
           </button>
 
           <div className="mt-8">
             <p>
-              <b>Category:</b>{" "}
-              {product.category?.name}
+              <b>Category:</b> {product.category?.name}
             </p>
 
             <p>
               <b>Availability:</b> In Stock
             </p>
           </div>
+
         </div>
+
       </div>
     </div>
   );

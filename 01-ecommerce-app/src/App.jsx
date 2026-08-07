@@ -17,8 +17,10 @@ import ProductDescription from "./pages/ProductDescription";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [cart, setCart] = useState([]);
-
+  const [cart, setCart] = useState(() => {
+  const savedCart = localStorage.getItem("cart");
+  return savedCart ? JSON.parse(savedCart) : [];
+});
   const cartLength = cart.length; //derive state
   const [searchQuery, setSearchQuery] = useState("");
   function handleAddToCart(item, quantity=1) {
@@ -35,6 +37,7 @@ function App() {
             : cartItem,
         );
       }
+      
 
       return [
         ...cart,
@@ -73,6 +76,10 @@ function App() {
     getProducts();
 
   }, []);
+
+  useEffect(() => {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}, [cart]);
 
   function handleSearchSubmit(event) {
     event.preventDefault();

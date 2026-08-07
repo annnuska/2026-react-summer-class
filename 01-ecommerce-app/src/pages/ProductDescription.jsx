@@ -11,10 +11,13 @@ function ProductDescription({ handleAddToCart }) {
 
   const [quantity, setQuantity] = useState(1);
 
+  if (!product.id) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <div className="max-w-6xl mx-auto p-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-
         <div>
           <img
             src={product.images?.[0]}
@@ -44,7 +47,7 @@ function ProductDescription({ handleAddToCart }) {
           </h1>
 
           <p className="text-3xl font-semibold text-green-600 mt-4">
-            Rs. {product.price}
+            Rs. {(product.price * 135).toFixed(2)}
           </p>
 
           <div className="mt-6">
@@ -59,8 +62,11 @@ function ProductDescription({ handleAddToCart }) {
 
           <div className="flex items-center gap-4 mt-6">
             <button
-              onClick={() => quantity > 1 && setQuantity(quantity - 1)}
               className="border px-4 py-2"
+              onClick={() =>
+                quantity > 1 &&
+                setQuantity(quantity - 1)
+              }
             >
               -
             </button>
@@ -68,8 +74,10 @@ function ProductDescription({ handleAddToCart }) {
             <span>{quantity}</span>
 
             <button
-              onClick={() => setQuantity(quantity + 1)}
               className="border px-4 py-2"
+              onClick={() =>
+                setQuantity(quantity + 1)
+              }
             >
               +
             </button>
@@ -78,10 +86,7 @@ function ProductDescription({ handleAddToCart }) {
           <button
             className="bg-black text-white px-8 py-3 rounded-lg mt-6"
             onClick={() =>
-              handleAddToCart(
-                product,
-                quantity
-              )
+              handleAddToCart(product, quantity)
             }
           >
             Add to Cart
@@ -89,16 +94,15 @@ function ProductDescription({ handleAddToCart }) {
 
           <div className="mt-8">
             <p>
-              <b>Category:</b> {product.category?.name}
+              <b>Category:</b>{" "}
+              {product.category?.name}
             </p>
 
             <p>
               <b>Availability:</b> In Stock
             </p>
           </div>
-
         </div>
-
       </div>
     </div>
   );
